@@ -134,3 +134,6 @@ print(losses)
 #%%
 print(weights)
 #%%
+
+
+    # T0 D0 
