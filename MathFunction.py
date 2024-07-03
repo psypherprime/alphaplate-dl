@@ -18,3 +18,4 @@ def Matrix_backward(X: np.ndarray, W: np.ndarray, sigma) -> np.ndarray:
     dNdX = deriv(W, (1,0))
 
     return np.dot(dSdN, dNdX)
+
