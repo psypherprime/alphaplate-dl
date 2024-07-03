@@ -136,4 +136,6 @@ print(weights)
 #%%
 
 
-    # T0 D0 
+    # T0 D0
+    # remove sklearn dependency
+    # make visulization
