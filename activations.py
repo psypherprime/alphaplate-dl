@@ -2,7 +2,6 @@ import numpy as np
 from core import Operation
 
 
-
 class Linear(Operation):
 
     def __init__(self) -> None:
@@ -38,7 +37,7 @@ class Tanh(Operation):
         return np.tanh(self.input)
 
     def _input_grad(self, output_grad: np.ndarray) -> np.ndarray:
-        return output_grad * (1 - (self.output * self.output)) # output of _output is stored in self.output
+        return output_grad * (1 - (self.output * self.output))  # output of _output is stored in self.output
 
 
 class ReLU(Operation):
@@ -50,7 +49,7 @@ class ReLU(Operation):
         return np.where(self.input > 0, self.input, 0)
 
     def _input_grad(self, output_grad: np.ndarray) -> np.ndarray:
-        return output_grad * (self.input >0)
+        return output_grad * (self.input > 0)
 
 
 class LeakyReLU(Operation):
@@ -60,7 +59,7 @@ class LeakyReLU(Operation):
         super().__init__()
 
     def _output(self, inference: bool) -> np.ndarray:
-        return np.where(self.input > 0, self.input, self.input*self.revmul)
+        return np.where(self.input > 0, self.input, self.input * self.revmul)
 
     def _input_grads(self, output_grad: np.ndarray) -> np.ndarray:
         return output_grad * np.where(self.input > 0, 1.0, self.revmul)
