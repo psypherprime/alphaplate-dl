@@ -14,8 +14,8 @@ class Linear(Operation):
     def __init__(self) -> None:
         super().__init__()
 
-    def _output(self, inference: bool) -> np.ndarray:
-        return self.input
+    def _output(self, inference: bool = False) -> np.ndarray:
+        return self.input_
 
     def _input_grad(self, output_grad: np.ndarray) -> np.ndarray:
         return output_grad
@@ -33,8 +33,8 @@ class Sigmoid(Operation):
     def __init__(self) -> None:
         super().__init__()
 
-    def _output(self, inference: bool) -> np.ndarray:
-        return 1.0 / (1.0 + np.exp(-1.0 * self.input))
+    def _output(self, inference: bool = False) -> np.ndarray:
+        return 1.0 / (1.0 + np.exp(-1.0 * self.input_))
 
     def _input_grad(self, output_grad: np.ndarray) -> np.ndarray:
         sigmoid_backgrad = self.output * (1.0 - self.output)
@@ -47,8 +47,8 @@ class Tanh(Operation):
     def __init__(self) -> None:
         super().__init__()
 
-    def _output(self, inference: bool) -> np.ndarray:
-        return np.tanh(self.input)
+    def _output(self, inference: bool = False) -> np.ndarray:
+        return np.tanh(self.input_)
 
     def _input_grad(self, output_grad: np.ndarray) -> np.ndarray:
         return output_grad * (1 - (self.output * self.output))  # output of _output is stored in self.output
@@ -65,13 +65,13 @@ class ReLU(Operation):
     """
 
     def __int__(self) -> None:
-        super()._init__()
+        super().__init__()
 
-    def _output(self, inference: bool) -> np.ndarray:
-        return np.where(self.input > 0, self.input, 0)
+    def _output(self, inference: bool = False) -> np.ndarray:
+        return np.where(self.input_ > 0, self.input_, 0)
 
     def _input_grad(self, output_grad: np.ndarray) -> np.ndarray:
-        return output_grad * (self.input > 0)
+        return output_grad * (self.input_ > 0)
 
 
 class LeakyReLU(Operation):
@@ -88,8 +88,8 @@ class LeakyReLU(Operation):
         self.negmul = negmul
         super().__init__()
 
-    def _output(self, inference: bool) -> np.ndarray:
-        return np.where(self.input > 0, self.input, self.input * self.negmul)
+    def _output(self, inference: bool = False) -> np.ndarray:
+        return np.where(self.input_ > 0, self.input_, self.input_ * self.negmul)
 
     def _input_grads(self, output_grad: np.ndarray) -> np.ndarray:
-        return output_grad * np.where(self.input > 0, 1.0, self.negmul)
+        return output_grad * np.where(self.input_ > 0, 1.0, self.negmul)
