@@ -400,29 +400,33 @@ dnn2 = NeuralNetwork(
     seed=7
 )
 
+'''
+Clean this up
+too much for randomness
+'''
 
-
-california = fetch_california_housing()
-data, target = california.data, california.target
-feature = california.feature_names
-
-scaler = StandardScaler()
-data = scaler.fit_transform(data)
-
-X_train, X_test, y_train, y_test = train_test_split(data, target, test_size=0.2, random_state=7)
-y_train, y_test = mk_2dnp(y_train), mk_2dnp(y_test)
-
-trainer = Trainer(mlp, SGD(lr=0.01))
-trainer.fit(X_train, y_train, X_test, y_test, epochs=100, eval_every=10)
-
-eval_regression_model(mlp, X_test, y_test)
-
-trainer = Trainer(dnn, SGD(lr=0.01))
-trainer.fit(X_train, y_train, X_test, y_test, epochs=100, eval_every=10)
-
-eval_regression_model(dnn, X_test, y_test)
-
-trainer = Trainer(prp, SGD(lr=0.001))
-trainer.fit(X_train, y_train, X_test, y_test, epochs=100, eval_every=10)
-
-eval_regression_model(dnn2, X_test, y_test)
+# Regression Prediction
+# california = fetch_california_housing()
+# data, target = california.data, california.target
+# feature = california.feature_names
+#
+# scaler = StandardScaler()
+# data = scaler.fit_transform(data)
+#
+# X_train, X_test, y_train, y_test = train_test_split(data, target, test_size=0.2, random_state=7)
+# y_train, y_test = mk_2dnp(y_train), mk_2dnp(y_test)
+#
+# trainer = Trainer(mlp, SGD(lr=0.01))
+# trainer.fit(X_train, y_train, X_test, y_test, epochs=100, eval_every=10)
+#
+# eval_regression_model(mlp, X_test, y_test)
+#
+# trainer = Trainer(dnn, SGD(lr=0.01))
+# trainer.fit(X_train, y_train, X_test, y_test, epochs=100, eval_every=10)
+#
+# eval_regression_model(dnn, X_test, y_test)
+#
+# trainer = Trainer(prp, SGD(lr=0.001))
+# trainer.fit(X_train, y_train, X_test, y_test, epochs=100, eval_every=10)
+#
+# eval_regression_model(dnn2, X_test, y_test)
