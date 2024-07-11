@@ -94,6 +94,7 @@ class LeakyReLU(Operation):
     def _input_grads(self, output_grad: np.ndarray) -> np.ndarray:
         return output_grad * np.where(self.input_ > 0, 1.0, self.negmul)
 
+
 class Dropout(Operation):
 
     def __init__(self, probability: float = 0.5) -> None:
@@ -109,4 +110,3 @@ class Dropout(Operation):
 
     def _input_grads(self, output_grad: np.ndarray) -> np.ndarray:
         return self.input_ * self.mask
-    

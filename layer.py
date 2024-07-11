@@ -1,6 +1,6 @@
 import numpy as np
 
-from activations import Linear, Sigmoid, Dropout  # Implement Dropout Function
+from activations import Linear, Sigmoid, Dropout
 from core import Operation, ParamOperation
 from layerops import WeightMul, BiasAdd
 
