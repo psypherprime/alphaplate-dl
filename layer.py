@@ -95,4 +95,3 @@ class Dense(Layer):
             self.operations.append(Dropout(self.dropout))
 
         return None
-    
