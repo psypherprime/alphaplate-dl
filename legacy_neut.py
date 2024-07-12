@@ -402,7 +402,7 @@ dnn2 = NeuralNetwork(
 
 '''
 Clean this up
-too much for randomness
+too much for bamboozlement
 '''
 
 # Regression Prediction
