@@ -49,9 +49,11 @@ class ParamOperation(Operation):
 
     def backward(self, output_grad: np.ndarray) -> np.ndarray:
         assert self.output.shape == output_grad.shape
-        # self.input_grad = self._input_grad(output_grad) # Why the repeated implementation
+        self.input_grad = self._input_grad(output_grad)  # Why the repeated implementation
         self.param_grad = self._param_grad(output_grad)
 
+        assert self.input_.shape == self.input_grad.shape
+        assert self.param.shape == self.param_grad.shape
         return self.input_grad
 
     def _param_grad(self, output_grad: np.ndarray) -> np.ndarray:

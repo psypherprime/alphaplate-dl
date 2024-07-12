@@ -22,9 +22,10 @@ class Loss(object):
         self.predictions = predictions
         self.targets = targets
 
-        self.output = self._output
+        # self.output = self._output()
+        loss_value = self._output()
 
-        return self.output
+        return loss_value
 
     def backward(self) -> np.ndarray:
         self.input_grad = self._input_grad()

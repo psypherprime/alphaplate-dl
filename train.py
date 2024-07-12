@@ -1,5 +1,5 @@
 import numpy as np
-from neunet import NeuralNetwork
+from neuralnetwork import NeuralNetwork
 from optimizers import Optimizer
 from copy import deepcopy
 
@@ -11,7 +11,7 @@ def generate_batches(X_train, y_train, batch_size) -> tuple[np.ndarray]:
 
     for ii in range(0, N, batch_size):
         X_batch, y_batch = X_train[ii:ii + batch_size], y_train[ii:ii + batch_size]
-        yield X_batch,
+        yield X_batch, y_batch
 
 
 def permute_data(X_train: np.ndarray, y_train: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
@@ -29,12 +29,12 @@ class Trainer(object):
         setattr(self.optim, 'net', self.net)
 
     def fit(self, X_train: np.ndarray, y_train: np.ndarray, X_test: np.ndarray, y_test: np.ndarray,
-            epochs: int = 100, batch_size: int = 32, eval_per: int = 10, restart: bool = True,
+            epochs: int = 100, batch_size: int = 32, eval_per: int = 10, restart: bool = False,
             early_stopping: bool = False, seed: int = None):
 
         setattr(self.optim, "max_epochs", epochs)
         self.optim._setup_decay()
-        last_model = deepcopy(self.net)
+        # last_model = deepcopy(self.net)
 
         if seed is not None:
             np.random.seed(seed)
@@ -63,16 +63,17 @@ class Trainer(object):
 
                 if early_stopping:
                     if loss < self.best_loss:
-                        print(f"epoch : {ep} | Validation Loss : {loss:.4f}")
-                        best_loss = loss
+                        print(f"epoch : {ep+1} | Validation Loss : {loss:.4f}")
+                        self.best_loss = loss
                     else:
                         print(f"loss increased | taking model with loss : {self.best_loss:.4f} of the epoch {ep+1-eval_per}")
                         self.net = last_model
 
                         setattr(self.optim, 'net', self.net)
+                        break
 
                 else:
-                    print(f"epoch : {ep} | Validation Loss : {loss:.4f}")
+                    print(f"epoch : {ep+1} Validation Loss : {loss: 0.4f}")
 
             if self.optim.finalr:
                 self.optim._decay_lr()

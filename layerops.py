@@ -13,13 +13,13 @@ class WeightMul(ParamOperation):
         super().__init__(W)
 
     def _output(self, inference: bool = False) -> np.ndarray:
-        return np.matmul(self.input_, self.param)
+        return np.dot(self.input_, self.param)
 
     def _input_grad(self, output_grad: np.ndarray) -> np.ndarray:
-        return np.matmul(output_grad, self.param.T)
+        return np.dot(output_grad, self.param.T)
 
     def _param_grad(self, output_grad: np.ndarray) -> np.ndarray:
-        return np.matmul(self.input_.T, output_grad)
+        return np.dot(self.input_.T, output_grad)
 
 
 class BiasAdd(ParamOperation):

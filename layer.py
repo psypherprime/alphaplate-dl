@@ -17,7 +17,7 @@ class Layer(object):
         self.output = None
 
     def _setup_layer(self, input_: np.ndarray) -> None:
-        pass
+        raise NotImplementedError()
 
     def forward(self, input_: np.ndarray, inference: bool = False) -> np.ndarray:
 
@@ -38,7 +38,8 @@ class Layer(object):
 
         assert output_grad.shape == self.output.shape
 
-        for operation in self.operations[::-1]:
+        # for operation in self.operations[::-1]:
+        for operation in reversed(self.operations):
             output_grad = operation.backward(output_grad)
 
         input_grad = output_grad
@@ -66,7 +67,7 @@ class Layer(object):
 
 class Dense(Layer):
 
-    def __init__(self, neurons: int, activation: Operation = Linear(), conv_in: bool = False,
+    def __init__(self, neurons: int, activation: Operation = Sigmoid(), conv_in: bool = False,
                  dropout: float = 1.0, weight_init: str = 'std') -> None:
         super().__init__(neurons)
         self.activation = activation

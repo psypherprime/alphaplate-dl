@@ -18,7 +18,7 @@ class Optimizer(object):
         if self.decay_type is None:
             return
         elif self.decay_type == "exponential":
-            self.decay_rate = np.power(self.finalr, self.lr, 1.0 / (self.max_epochs - 1))
+            self.decay_rate = np.power(self.finalr / self.lr, 1.0 / (self.max_epochs - 1))
         elif self.decay_type == "linear":
             self.decay_rate = (self.lr - self.finalr) / (self.max_epochs - 1)
 
@@ -41,7 +41,7 @@ class Optimizer(object):
 
 class SGD(Optimizer):
 
-    def __init__(self, lr: float = 0.01, finalr: float = 1e9, decay_type: str = None):
+    def __init__(self, lr: float = 0.01, finalr: float = -1e9, decay_type: str = None):
         super().__init__(lr, finalr, decay_type)
 
     def _update_rule(self, **kwargs) -> None:

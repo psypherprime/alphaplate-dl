@@ -43,7 +43,7 @@ class ParamOperation(Operation):
         super().__init__()
         self.param = param
 
-    def backward(self, output_grad:np.ndarray) -> np.ndarray:
+    def backward(self, output_grad: np.ndarray) -> np.ndarray:
         assert self.output.shape == output_grad.shape
 
         self.input_grad = self._input_grad(output_grad)
@@ -60,7 +60,7 @@ class ParamOperation(Operation):
 
 class WeightMultiply(ParamOperation):
 
-    def __init__(self, W:np.ndarray) -> np.ndarray:
+    def __init__(self, W:np.ndarray):
         super().__init__(W)
 
     def _output(self) -> np.ndarray:
@@ -76,7 +76,7 @@ class WeightMultiply(ParamOperation):
 class BiasAdd(ParamOperation):
 
     def __init__(self, B:np.ndarray):
-        # assert B[0].shape == 1
+        # assert B.shape[0]=1
         super().__init__(B)
 
     def _output(self) -> np.ndarray:
@@ -406,19 +406,19 @@ too much for bamboozlement
 '''
 
 # Regression Prediction
-# california = fetch_california_housing()
-# data, target = california.data, california.target
-# feature = california.feature_names
-#
-# scaler = StandardScaler()
-# data = scaler.fit_transform(data)
-#
-# X_train, X_test, y_train, y_test = train_test_split(data, target, test_size=0.2, random_state=7)
-# y_train, y_test = mk_2dnp(y_train), mk_2dnp(y_test)
-#
-# trainer = Trainer(mlp, SGD(lr=0.01))
-# trainer.fit(X_train, y_train, X_test, y_test, epochs=100, eval_every=10)
-#
+california = fetch_california_housing()
+data, target = california.data, california.target
+feature = california.feature_names
+
+scaler = StandardScaler()
+data = scaler.fit_transform(data)
+
+X_train, X_test, y_train, y_test = train_test_split(data, target, test_size=0.2, random_state=7)
+y_train, y_test = mk_2dnp(y_train), mk_2dnp(y_test)
+
+trainer = Trainer(mlp, SGD(lr=0.01))
+trainer.fit(X_train, y_train, X_test, y_test, epochs=100, eval_every=10)
+
 # eval_regression_model(mlp, X_test, y_test)
 #
 # trainer = Trainer(dnn, SGD(lr=0.01))

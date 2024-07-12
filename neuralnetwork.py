@@ -18,7 +18,7 @@ class LayerBlock(object):
     def backward(self, loss_grad: np.ndarray) -> np.ndarray:
 
         grad = loss_grad
-        for layer in self.layers:
+        for layer in reversed(self.layers):
             grad = layer.backward(grad)
 
         return grad
