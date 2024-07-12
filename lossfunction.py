@@ -33,7 +33,7 @@ class Loss(object):
 
         return self.input_grad
 
-    def _output(self) -> np.ndarray:
+    def _output(self) -> float:
         raise NotImplementedError()
 
     def _input_grad(self) -> np.ndarray:
