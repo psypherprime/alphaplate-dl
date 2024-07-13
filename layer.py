@@ -1,9 +1,8 @@
 import numpy as np
 
-from activations import Linear, Sigmoid, Dropout
+from activations import Linear, Sigmoid, Dropout, Flatten
 from core import Operation, ParamOperation
-from layerops import WeightMul, BiasAdd
-
+from layerops import WeightMul, BiasAdd, Conv2D_Op
 
 class Layer(object):
 
@@ -93,6 +92,42 @@ class Dense(Layer):
         self.operations = [WeightMul(self.params[0]), BiasAdd(self.params[1]), self.activation]
 
         if self.dropout < 1.0:
+            self.operations.append(Dropout(self.dropout))
+
+        return None
+
+
+class Conv2D(Layer):
+
+    def __init__(self, out_channels: int, param_size: int, dropout: float = 1.0,
+                 weight_init: str = 'std', activation: Operation = Linear(),
+                 flatten: bool = False) -> None:
+        super().__init__(out_channels)
+        self.param_size = param_size
+        self.out_channels = out_channels
+        self.dropout = dropout
+        self.flatten = flatten
+        self.weight_init = weight_init
+        self.activation = activation
+
+    def _setup_layer(self, input_: np.ndarray) -> None:
+        self.params = []
+        in_channels = input_.shape[1]
+
+        if self.weight_init == 'glorot':
+            scale = 2.0 / (in_channels + self.out_channels)
+        else:
+            scale = 1.0
+
+        conv_param = np.random.normal(loc=0, scale=scale, size=(self.input_.shape[1], in_channels, self.param_size, self.param_size))
+        self.params.append(conv_param)
+
+        self.operations = [Conv2D_Op(conv_param), self.activation]
+
+        if self.flatten:
+            self.operations.append(Flatten())
+
+        if self.dropout:
             self.operations.append(Dropout(self.dropout))
 
         return None
