@@ -128,4 +128,3 @@ class Conv2D_Op(ParamOperation):
         return (np.matmul(in_patches_reshaped, out_grad_reshaped)
                 .reshape(in_channels, self.param_size, self.param_size, out_channels)
                 .transpose(0, 3, 1, 2))
-    
